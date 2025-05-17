@@ -53,7 +53,7 @@ public class FileManager {
             String password = Main.SCANNER.nextLine();
 
             try(FileWriter writer = new FileWriter(FileManager.getDataFileName(), true)){
-                writer.write(service + "," + username + "," + password);
+                writer.write(PasswordBeef.encode(service) + "," + PasswordBeef.encode(username) + "," + PasswordBeef.encode(password));
                 writer.write("\n");
                 System.out.println("credentials saved");
 
@@ -79,11 +79,11 @@ public class FileManager {
                 String service = section[0];
                 String username = section[1];
                 String password = section[2];
-                if (service.equalsIgnoreCase(serviceRequest)) {
+                if (PasswordBeef.decode(service).equalsIgnoreCase(serviceRequest)) {
                     System.out.println("=== Credential Found ===");
-                    System.out.println("Service:  " + service);
-                    System.out.println("Username: " + username);
-                    System.out.println("Password: " + password);
+                    System.out.println("Service:  " + PasswordBeef.decode(service));
+                    System.out.println("Username: " + PasswordBeef.decode(username));
+                    System.out.println("Password: " + PasswordBeef.decode(password));
                     found = true;
                     break;
                 }
@@ -117,7 +117,7 @@ public class FileManager {
 
                 String[] section = currentLine.split(",");
 
-                if(section.length == 3 && section[0].trim().equalsIgnoreCase(serviceRequest)){
+                if(section.length == 3 && PasswordBeef.decode(section[0]).trim().equalsIgnoreCase(serviceRequest)){
                     deleted = true;
                     continue;
                 }

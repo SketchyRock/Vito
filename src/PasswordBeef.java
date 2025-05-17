@@ -1,5 +1,15 @@
+import java.util.Base64;
 
 public class PasswordBeef {
+
+    public static String encode(String input) {
+        return Base64.getEncoder().encodeToString(input.getBytes());
+    }
+
+    public static String decode(String base64Input) {
+        byte[] decodedBytes = Base64.getDecoder().decode(base64Input);
+        return new String(decodedBytes);
+    }
 
     public static void mainLoop(){
             while(true){

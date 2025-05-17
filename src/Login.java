@@ -24,10 +24,10 @@ public class Login {
             while(obj.hasNextLine()){
                 String currentLine = obj.nextLine();
                 if (currentLine.isEmpty()) continue;
-                String[] section = currentLine.split("=");
+                String[] section = currentLine.split(",");
                 if(section.length == 1){
                 String password = section[0];
-                Login.setAdminPassword(password);
+                Login.setAdminPassword(PasswordBeef.decode(password));
                 }
             }
         } catch (IOException e) {
@@ -41,7 +41,7 @@ public class Login {
                 String adminPasswordInput = Main.SCANNER.nextLine();
 
                 try(FileWriter writer = new FileWriter(FileManager.getDataFileName(), true)){
-                writer.write(adminPasswordInput + "=");
+                writer.write(PasswordBeef.encode(adminPasswordInput) + ",");
                 writer.write("\n");
                 System.out.println("credentials saved");
                 }
