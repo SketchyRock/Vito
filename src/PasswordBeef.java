@@ -32,7 +32,7 @@ public class PasswordBeef {
     }
 
     public static void printOptions(){
-        System.out.println(" 1: Add \n 2: View \n 3: Delete \n 4: Exit Application");
+        System.out.println(" 1: Add \n 2: View \n 3: Delete \n 4: Change Admin Password \n 5: Exit Application");
     }
 
     public static void checkInputOptions(int input){
@@ -47,6 +47,9 @@ public class PasswordBeef {
                     FileManager.deleteOption();
                 }
                 case 4 -> {
+                    FileManager.changeAdminPassword();
+                }
+                case 5 -> {
                     System.out.println("Exiting...");
                     System.exit(0);
                 }

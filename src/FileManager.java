@@ -62,6 +62,21 @@ public class FileManager {
             }
         }
 
+        public static void addOptionAdminPassword(){
+
+            System.out.println("New Password: ");
+            String service = Main.SCANNER.nextLine();
+
+            try(FileWriter writer = new FileWriter(FileManager.getDataFileName(), true)){
+                writer.write(PasswordBeef.encode(service) + ",");
+                writer.write("\n");
+                System.out.println("credentials saved");
+
+            } catch (IOException e) {
+                System.out.println("Error writing to file.");
+            }
+        }
+
         //recieves users desired "service" the want credentials to and returns the service, username and password
     public static void viewOption(){
 
@@ -142,6 +157,63 @@ public class FileManager {
     } else {
         System.out.println("Error Could not delete original file.");
     }
+    }
+
+    public static void deleteOptionAdminPassword(String specificServiceRequest){
+    File originalFile = new File(FileManager.getDataFileName());
+    File tempFile = new File(FileManager.getTempDataFileName());
+
+        String serviceRequest = specificServiceRequest;
+        boolean deleted = false;
+
+        try(
+            Scanner obj = new Scanner(new File(FileManager.getDataFileName()));
+            FileWriter writer = new FileWriter(tempFileName);
+            ){
+            while(obj.hasNextLine()){
+                String currentLine = obj.nextLine();
+
+                if (currentLine.isEmpty()) continue;
+
+                String[] section = currentLine.split(",");
+
+                if(section.length == 1 && PasswordBeef.decode(section[0]).equals(serviceRequest)){
+                    deleted = true;
+                    continue;
+                }
+
+                writer.write(currentLine + "\n");
+            }
+            writer.flush();
+
+        } catch (IOException e) {
+            System.out.println("Error deleting file content");
+        }
+        if (originalFile.delete()) {
+        if (tempFile.renameTo(originalFile)) {
+            if (deleted) {
+                System.out.println("Credential for '" + serviceRequest + "' deleted.");
+            } else {
+                System.out.println("No credential found for: " + serviceRequest);
+            }
+        } else {
+            System.out.println("Error Could not rename temp file.");
+        }
+    } else {
+        System.out.println("Error Could not delete original file.");
+    }
+    }
+
+    public static void changeAdminPassword(){
+        System.out.println("Enter Current Admin Password: ");
+        String adminPasswordInput = Main.SCANNER.nextLine();
+        while(!adminPasswordInput.equals(Login.getAdminPassword())){
+                System.out.println("incorrect");
+                System.out.println("Enter Current Admin Password: ");
+                adminPasswordInput = Main.SCANNER.nextLine();
+        }
+        FileManager.deleteOptionAdminPassword(adminPasswordInput);
+        FileManager.addOptionAdminPassword();
     }
 
 
