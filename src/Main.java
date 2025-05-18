@@ -2,18 +2,23 @@ import java.util.Scanner;
 
 public class Main {
 
+    /* a global scanner is used and basically never closes */
     public static final Scanner SCANNER = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
         
-        // if a file can be created then app asks user to set admin password (first time users) 
+        /*checks if data file exists, 
+        if not a admin password is created by user*/ 
         if (FileManager.canCreateFile()){
-            Login.createAdminPassword(); //creates admin pass
-            Login.setAdminPasswordFromFile(); //sets that pass to var
+            Login.createAdminPassword(); 
+            Login.setAdminPasswordFromFile(); 
         }
+        /*if data file does exist it gets the admin password into memory*/
         else{
-            Login.setAdminPasswordFromFile(); //sets variable of adminPassword to the admin password read from the file if not a first time user
+            Login.setAdminPasswordFromFile(); 
         }
-            if(Login.adminLoginAttempt()){ //Login.adminLoginAttempt()
+        /*if login is successful,
+        main loop is run*/
+            if(Login.adminLoginAttempt()){ 
                 FileManager.createFile();
                 PasswordBeef.mainLoop();
             }

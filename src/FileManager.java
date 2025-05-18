@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class FileManager {
 
-    //name that created file is always given
+    /*final names of temp and data files*/
     private final static String fileName = "Data.txt";
     private final static String tempFileName = "Temp_Data.txt";
 
@@ -21,13 +21,14 @@ public class FileManager {
         return tempFileName;
     }
 
-    //returns true if a file can be created, false if it already exists
+    /*returns true if a file can be created, 
+    false if it already exists*/
     public static boolean canCreateFile(){
         File file = new File(FileManager.getDataFileName());
         return !file.exists();
     }
 
-    // creates file named Data.txt
+    // creates file named Data.txt if it doesnt exist
     public static void createFile(){
         File file = new File(fileName);
 
@@ -62,6 +63,8 @@ public class FileManager {
             }
         }
 
+        /*asks user for a new admin password,
+        saves encoded password to data file*/
         public static void addOptionAdminPassword(){
 
             System.out.println("New Password: ");
@@ -77,7 +80,9 @@ public class FileManager {
             }
         }
 
-        //recieves users desired "service" the want credentials to and returns the service, username and password
+        /*user inputs name of service they wish to view info of,
+        finds service in the data file,
+        prints the service name, username and password found in data file*/
     public static void viewOption(){
 
         System.out.println("Name of Service: ");
@@ -112,7 +117,10 @@ public class FileManager {
         }
     }
 
-
+    /*user inputs a service name to delete,
+    writes a temp file that does not include that service,
+    deletes original file,
+    renames temp file to original data file name*/
     public static void deleteOption(){
     File originalFile = new File(FileManager.getDataFileName());
     File tempFile = new File(FileManager.getTempDataFileName());
@@ -159,6 +167,7 @@ public class FileManager {
     }
     }
 
+    /*deletes any admin password in data file*/
     public static void deleteOptionAdminPassword(String specificServiceRequest){
     File originalFile = new File(FileManager.getDataFileName());
     File tempFile = new File(FileManager.getTempDataFileName());
@@ -204,6 +213,9 @@ public class FileManager {
     }
     }
 
+    /*before changing admin password, 
+    checks if user has original admin password, 
+    then deletes it and asks for a new admin password from the user*/
     public static void changeAdminPassword(){
         System.out.println("Enter Current Admin Password: ");
         String adminPasswordInput = Main.SCANNER.nextLine();

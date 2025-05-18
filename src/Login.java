@@ -18,7 +18,7 @@ public class Login {
         return Login.adminPassword;
     }
 
-    //sets adminPassword var to what is read in the Data.txt file
+    //sets adminPassword var to admin password read in the Data.txt file
     public static void setAdminPasswordFromFile() {
         try(Scanner obj = new Scanner(new File(FileManager.getDataFileName()))){
             while(obj.hasNextLine()){
@@ -50,7 +50,8 @@ public class Login {
                 }
     }
 
-    //checks if user input correct admin password, failed login attempt loop if input is incorrect
+    /*checks if user input is correct admin password,
+     failed login attempt loop if input is incorrect*/
     public static boolean adminLoginAttempt (){
             System.out.println("Login: ");
             String input = Main.SCANNER.nextLine();
